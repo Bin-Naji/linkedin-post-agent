@@ -86,7 +86,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### 2. Installation
 Clone the repository and enter the directory:
 ```bash
-git clone https://github.com/YOUR_USERNAME/linkedin-post-agent.git
+git clone https://github.com/Bin-Naji/linkedin-post-agent.git
 cd linkedin-post-agent
 ```
 
