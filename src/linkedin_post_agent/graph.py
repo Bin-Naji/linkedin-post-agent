@@ -1,5 +1,7 @@
-"""LangGraph workflow definition and compilation."""
+"""LangGraph workflow definition and compilation with checkpointer persistence support."""
 
+from typing import Any, Optional
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import (
     END,
     START,
@@ -17,12 +19,19 @@ from .nodes import (
 from .router import review_router
 
 
-def build_graph() -> CompiledStateGraph:
+def build_graph(checkpointer: Optional[Any] = None) -> CompiledStateGraph:
     """Build and compile the human-in-the-loop LinkedIn post workflow.
+
+    Args:
+        checkpointer: Optional LangGraph checkpointer for state persistence.
+                     If None, defaults to an in-memory MemorySaver checkpointer.
 
     Returns:
         CompiledStateGraph: The executable compiled LangGraph application.
     """
+    if checkpointer is None:
+        checkpointer = MemorySaver()
+
     builder = StateGraph(MessagesState)
 
     # Register nodes
@@ -49,4 +58,4 @@ def build_graph() -> CompiledStateGraph:
     builder.add_edge("feedback", "generator")
     builder.add_edge("post", END)
 
-    return builder.compile()
+    return builder.compile(checkpointer=checkpointer)

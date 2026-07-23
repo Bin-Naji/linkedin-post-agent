@@ -13,6 +13,8 @@ dependencies = [
     "langchain-groq",
     "langgraph",
     "python-dotenv",
+    "pytest",
+    "streamlit",
 ]
 
 [build-system]
